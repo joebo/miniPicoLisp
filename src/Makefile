@@ -3,6 +3,7 @@
 
 .SILENT:
 
+CC=c:/Progra~2/LLVM/bin/clang.exe
 bin = ../bin
 picoFiles = main.c gc.c apply.c flow.c sym.c subr.c math.c io.c tab.c
 
@@ -10,19 +11,13 @@ picolisp: $(bin)/picolisp
 
 .c.o:
 	echo $*.c:
-	gcc -c -O2 -pipe \
-	-falign-functions -fomit-frame-pointer -fno-strict-aliasing \
-	-W -Wimplicit -Wreturn-type -Wunused -Wformat \
-	-Wuninitialized -Wstrict-prototypes \
-	-D_GNU_SOURCE  $*.c
+	$(CC) -w -c $*.c
 
 $(picoFiles:.c=.o): pico.h
 
 $(bin)/picolisp: $(picoFiles:.c=.o)
-	mkdir -p $(bin)
-	echo "  " link picolisp:
-	gcc -o $(bin)/picolisp $(picoFiles:.c=.o) -lc -lm
-	strip $(bin)/picolisp
+	c:/Progra~2/LLVM/bin/clang.exe -o picolisp $(picoFiles:.c=.o)
+#	strip $(bin)/picolisp
 
 
 # Clean up
